@@ -19,4 +19,18 @@ class AppInfoRepository {
           (snapshot) => snapshot.data(),
     );
   }
+
+  /// app/appInfo ドキュメントにテストデータを書き込む
+  Future<void> setData() async {
+    final docRef = _db.collection('app').doc('appInfo');
+    await docRef.set(
+      {
+        "testField": "Hello Test",
+        "updatedAt": FieldValue.serverTimestamp(),
+      },
+      SetOptions(merge: true), // 既存フィールドを消さずに追加/更新
+    );
+    print('setData() done');
+  }
+
 }
